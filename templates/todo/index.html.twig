@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TodoController!{% endblock %}
+
+{% block body %}
+noot noot
+
+    {% for todo in todos %}
+
+        <p>{{ todo.description }}</p>
+
+        <a href="#" class="btn btn-danger">A faire</a>
+       <a href="{{ path('todo_show', {id:todo.id}) }}" class="btn btn-primary">Voir</a>
+        <hr>
+    {% endfor %}
+
+{% endblock %}
