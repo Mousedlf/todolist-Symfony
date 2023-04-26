@@ -11,6 +11,8 @@
 
         <a href="#" class="btn btn-secondary">A faire</a>
        <a href="{{ path('todo_show', {id:todo.id}) }}" class="btn btn-primary">Voir</a>
+        <a href="{{ path('todo_edit', {id:todo.id}) }}" class="btn btn-info">Edit</a>
+
         <a href="{{ path('todo_delete', {id:todo.id}) }}" class="btn btn-danger">Delete</a>
 
         <hr>

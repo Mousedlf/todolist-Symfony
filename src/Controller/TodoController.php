@@ -49,7 +49,6 @@ class TodoController extends AbstractController
         $formTodo->handleRequest($request);
         if($formTodo->isSubmitted() && $formTodo->isValid()){
 
-
             $todo->setCreatedAt(new \DateTime());
             $todo->setStatus(false);
 
@@ -57,10 +56,24 @@ class TodoController extends AbstractController
             $manager->flush();
 
             return $this->redirectToRoute('app_todo',[]);
-
         }
 
+        return $this->renderForm('todo/create.html.twig', [
+            'formTodo'=>$formTodo
+        ]);
+    }
 
+    #[Route('/todo/edit/{id}', name: 'todo_edit')]
+    public function edit(Todo $todo, Request $request, EntityManagerInterface $manager){
+
+        $formTodo = $this->createForm(TodoType::class,$todo);
+        $formTodo->handleRequest($request);
+        if($formTodo->isSubmitted() && $formTodo->isValid()){
+            $manager->persist($todo);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_todo',[]);
+        }
 
         return $this->renderForm('todo/create.html.twig', [
             'formTodo'=>$formTodo
