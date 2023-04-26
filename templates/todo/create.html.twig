@@ -1,10 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello TodoController!{% endblock %}
+{% form_theme formTodo 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
 
-    create
+    <h1>add something to do</h1>
 
+        {{ form_start(formTodo) }}
+
+        {{ form_row(formTodo.description) }}
+
+    <button type="submit" class="btn btn-primary">Ok</button>
+        {{ form_end(formTodo) }}
 
 {% endblock %}

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,9 +42,28 @@ class TodoController extends AbstractController
     }
 
     #[Route('/todo/create', name: 'todo_create')]
-    public function create(){
+    public function create(Request $request, EntityManagerInterface $manager){
+
+        $todo = new Todo();
+        $formTodo = $this->createForm(TodoType::class,$todo);
+        $formTodo->handleRequest($request);
+        if($formTodo->isSubmitted() && $formTodo->isValid()){
 
 
-        return $this->renderForm('todo/create.html.twig', [        ]);
+            $todo->setCreatedAt(new \DateTime());
+            $todo->setStatus(false);
+
+            $manager->persist($todo);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_todo',[]);
+
+        }
+
+
+
+        return $this->renderForm('todo/create.html.twig', [
+            'formTodo'=>$formTodo
+        ]);
     }
 }

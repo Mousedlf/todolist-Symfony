@@ -3,14 +3,16 @@
 {% block title %}Hello TodoController!{% endblock %}
 
 {% block body %}
-noot noot
 
     {% for todo in todos %}
 
         <p>{{ todo.description }}</p>
+        <p>{{ todo.createdAt|date('d/m/Y - H:s') }}</p>
 
-        <a href="#" class="btn btn-danger">A faire</a>
+        <a href="#" class="btn btn-secondary">A faire</a>
        <a href="{{ path('todo_show', {id:todo.id}) }}" class="btn btn-primary">Voir</a>
+        <a href="{{ path('todo_delete', {id:todo.id}) }}" class="btn btn-danger">Delete</a>
+
         <hr>
     {% endfor %}
 
